@@ -1,0 +1,114 @@
+// compileExpanded: ./console.css
+$term_black: #222;
+$term_white: #eee;
+$term_green: #4e4;
+$term_red: #e44;
+$term_orange: #e94;
+$term_yellow: #ee4;
+$term_grey: #777;
+
+$term_bg: $term_black;
+$term_text: $term_white;
+
+$term_offset: calc(100vw / 10);
+
+// font-family: 'Ubuntu Mono', monospace;
+// font-family: 'VT323', monospace;
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-image: url('../images/Primary_source_unavailable_terminal_error.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.console-component {
+  // background-color: transparent;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 9px,
+    transparentize($term_green, .97) 11px,
+    transparentize($term_green, .93) 12px,
+    transparentize($term_green, .97) 14px,
+    transparent 23px
+  );
+
+  position: absolute;
+  border-radius: calc(#{$term_offset} * 0.85);
+  left: calc(#{$term_offset} * 0.85);
+  right: calc(#{$term_offset} * 0.85);
+  top: calc(#{$term_offset} * 0.85);
+  color: $term_green;
+  text-shadow: 0 0 5px transparentize($term_green, 0.5);
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 18px;
+
+  height: calc(100vw * 0.59;
+
+  overflow-y: scroll;
+  box-sizing: border-box;
+  padding: calc(#{$term_offset} * 0.3) calc(#{$term_offset} * 0.15) ;
+
+  word-wrap: break-word;
+  line-height: 1.3em;
+
+
+  * {
+    word-wrap: break-word;
+    line-height: 1.3em;
+  }
+
+  .console-cursor-empty {
+    border: none;
+    white-space: pre;
+    background-color: $term_green;
+  }
+
+  .console-cursor {
+    color: $term_black;
+    border: none;
+    background-color: $term_green;
+  }
+
+  .console-history {
+    .history-input {
+      font-weight: 700;
+
+      &:before {
+        content: ".";
+        visibility: hidden;
+      }
+    }
+
+    .stderr {
+      color: $term_red;
+      text-shadow: 0 0 5px transparentize($term_red, 0.4);
+    }
+
+    .stdout {
+      &:before {
+        content: "=> "
+      }
+    }
+
+  }
+
+  .console-prompt {
+    font-weight: 700;
+
+    &:after {
+      content: '.';
+      visibility: hidden;
+    }
+
+    &:before {
+      content: ".";
+      visibility: hidden;
+    }
+  }
+
+}

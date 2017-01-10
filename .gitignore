@@ -1,5 +1,6 @@
 node_modules/*
 MVPTodo.txt
 bundle.js.map
-bundle.js
 console.css
+fo.css
+.sass-cache/*

@@ -6,12 +6,8 @@ class ConsoleWrapper extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      prompt: 'FooBarBaz',
-      history: [
-        {type: "test", input: "foo", output: "foo"},
-        {type: "test", input: "bar", output: "bar"},
-        {type: "test", input: "baz", output: "baz"}
-      ]
+      prompt: '',
+      history: []
     };
   }
 

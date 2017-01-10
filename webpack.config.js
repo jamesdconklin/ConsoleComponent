@@ -4,7 +4,7 @@ module.exports = {
   context: __dirname,
   entry: "./frontend/entry.jsx",
   output: {
-    path: __dirname,
+    path: path.join(__dirname, 'assets', 'javascripts'),
     filename: "bundle.js"
   },
   module: {

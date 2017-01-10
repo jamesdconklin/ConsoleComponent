@@ -27,11 +27,22 @@ class ConsoleComponent extends React.Component {
         historyPos: history.length + 1
       });
 
+      var term = document.getElementById("console-terminal");
+      term.scrollTop = term.scrollHeight - term.clientHeight;
+
     };
     var evalPromise = new Promise((resolve, reject) => {
       let result;
       try {
         result = this.props.evalFn(input);
+        switch (result) {
+          case undefined:
+            result = "undefined";
+            break;
+          case null:
+            result = "null";
+            break;
+        }
         resolve({ type: "stdout", input, output: result });
       } catch(err) {
         reject({ type: "stderr", input, output: `${err.name}: ${err.message}`});
@@ -44,17 +55,29 @@ class ConsoleComponent extends React.Component {
     let { setPrompt, prompt, history } = this.props;
     let {cursorPos, historyPos } = this.state;
     let newHistoryPos = historyPos;
+    e.preventDefault();
     switch (e.key) {
+      // Handle ignored keypresses first.
+      case "Shift":
+      case "Alt":
+      case "Meta":
+      case "CapsLock":
+      case "Control":
+      case "Escape":
+      break;
+
       case "ArrowLeft":
         this.setState({
           cursorPos: Math.max(0, cursorPos - 1)
         });
         break;
+
       case "ArrowRight":
         this.setState({
           cursorPos: Math.min(cursorPos + 1, prompt.length)
         });
         break;
+
       case "ArrowUp":
         newHistoryPos = Math.max(0, historyPos - 1);
         this.setState({
@@ -63,6 +86,7 @@ class ConsoleComponent extends React.Component {
         });
         setPrompt((newHistoryPos >= 0) ? history[newHistoryPos].input : '');
         break;
+
       case "ArrowDown":
         newHistoryPos = Math.min(history.length, historyPos + 1);
 
@@ -81,20 +105,12 @@ class ConsoleComponent extends React.Component {
           historyPos: newHistoryPos
         });
         break;
-      case "Shift":
-        break;
-      case "Alt":
-        break;
-      case "Meta":
-        break;
-      case "CapsLock":
-        break;
-      case "Control":
-        break;
+
       case "Delete":
         prompt = prompt.slice(0,cursorPos) + prompt.slice(cursorPos+1);
         setPrompt(prompt);
         break;
+
       case "Backspace":
         if (!prompt) {
           break;
@@ -103,10 +119,17 @@ class ConsoleComponent extends React.Component {
         setPrompt(prompt);
         this.setState({ cursorPos: cursorPos - 1 });
         break;
+
       case "Enter":
         this._evalPromiseConstructor(prompt);
         break;
+
       default:
+        if (e.ctrlKey) {
+          //TODO: Handle other control sequences.
+          break;
+        }
+
         prompt = prompt.slice(0,cursorPos) + e.key + prompt.slice(cursorPos);
         setPrompt(prompt);
         this.setState({ cursorPos: cursorPos + 1 });
@@ -128,7 +151,7 @@ class ConsoleComponent extends React.Component {
     }
     // I tried to get the cursor rendering with pseudocontent like I did
     // above, but it shifted the prompt over.
-    return <span className="console-prompt">> <span className="console-cursor console-cursor-empty"/></span>;
+    return <span className="console-prompt">> <span className="console-cursor-empty"> </span></span>;
   }
 
   _renderHistory() {
@@ -137,7 +160,7 @@ class ConsoleComponent extends React.Component {
     history.forEach((lineItem, idx) => {
       historyList.push(
         <li key={`in-${idx}`} className={"history-input"}>
-          {lineItem.input}
+          {"> " + lineItem.input}
         </li>
       );
       historyList.push(
@@ -155,10 +178,9 @@ class ConsoleComponent extends React.Component {
 
   // TIL: tabIndex="0" makes an element focusable.
   // TODO: Make it a form instead.
-  // Note: We're not handling sustained keyDowns for now.
   render () {
     return (
-      <div className="console-component"
+      <div className="console-component" id="console-terminal"
            onKeyDown={this._handleKeyDown}
            tabIndex="0" autoFocus>
         {this._renderHistory()}
