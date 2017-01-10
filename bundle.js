@@ -22685,9 +22685,14 @@
 	
 	        case "Enter":
 	          this._evalPromiseConstructor(prompt);
+	          e.preventDefault();
 	          break;
 	
 	        default:
+	          console.log(e.key);
+	          if (e.key === " ") {
+	            e.preventDefault();
+	          }
 	          if (e.ctrlKey) {
 	            if ('qQwWrRtT'.indexOf(e.key) < 0) {
 	              e.preventDefault();
