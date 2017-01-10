@@ -1,0 +1,77 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-image: url("./Primary_source_unavailable_terminal_error.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.console-component {
+  background: repeating-linear-gradient(0deg, transparent, transparent 9px, rgba(68, 238, 68, 0.03) 11px, rgba(68, 238, 68, 0.07) 12px, rgba(68, 238, 68, 0.03) 14px, transparent 23px);
+  position: absolute;
+  border-radius: calc(calc(100vw / 10) * 0.85);
+  left: calc(calc(100vw / 10) * 0.85);
+  right: calc(calc(100vw / 10) * 0.85);
+  top: calc(calc(100vw / 10) * 0.85);
+  color: #4e4;
+  text-shadow: 0 0 5px rgba(68, 238, 68, 0.5);
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 18px;
+  height: calc(100vw * 0.59);
+  overflow-y: scroll;
+  box-sizing: border-box;
+  padding: calc(calc(100vw / 10) * 0.3) calc(calc(100vw / 10) * 0.15);
+  word-wrap: break-word;
+  line-height: 1.2em;
+}
+
+.console-component * {
+  word-wrap: break-word;
+  line-height: 1.2em;
+}
+
+.console-component .console-cursor-empty {
+  border: none;
+  white-space: pre;
+  background-color: #4e4;
+}
+
+.console-component .console-cursor {
+  color: #222;
+  border: none;
+  background-color: #4e4;
+}
+
+.console-component .console-history .history-input {
+  font-weight: 700;
+}
+
+.console-component .console-history .history-input:before {
+  content: ".";
+  visibility: hidden;
+}
+
+.console-component .console-history .stderr {
+  color: #e44;
+  text-shadow: 0 0 5px rgba(238, 68, 68, 0.6);
+}
+
+.console-component .console-history .stdout:before {
+  content: "=> ";
+}
+
+.console-component .console-prompt {
+  font-weight: 700;
+}
+
+.console-component .console-prompt:after {
+  content: '.';
+  visibility: hidden;
+}
+
+.console-component .console-prompt:before {
+  content: ".";
+  visibility: hidden;
+}

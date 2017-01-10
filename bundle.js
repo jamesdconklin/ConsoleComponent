@@ -22615,7 +22615,6 @@
 	          historyPos = _state.historyPos;
 	
 	      var newHistoryPos = historyPos;
-	      e.preventDefault();
 	      switch (e.key) {
 	        // Handle ignored keypresses first.
 	        case "Shift":
@@ -22627,18 +22626,21 @@
 	          break;
 	
 	        case "ArrowLeft":
+	          e.preventDefault();
 	          this.setState({
 	            cursorPos: Math.max(0, cursorPos - 1)
 	          });
 	          break;
 	
 	        case "ArrowRight":
+	          e.preventDefault();
 	          this.setState({
 	            cursorPos: Math.min(cursorPos + 1, prompt.length)
 	          });
 	          break;
 	
 	        case "ArrowUp":
+	          e.preventDefault();
 	          newHistoryPos = Math.max(0, historyPos - 1);
 	          this.setState({
 	            cursorPos: history[newHistoryPos].input.length,
@@ -22648,6 +22650,7 @@
 	          break;
 	
 	        case "ArrowDown":
+	          e.preventDefault();
 	          newHistoryPos = Math.min(history.length, historyPos + 1);
 	
 	          if (history[newHistoryPos]) {
@@ -22686,6 +22689,9 @@
 	
 	        default:
 	          if (e.ctrlKey) {
+	            if ('qQwWrRtT'.indexOf(e.key) < 0) {
+	              e.preventDefault();
+	            }
 	            //TODO: Handle other control sequences.
 	            break;
 	          }

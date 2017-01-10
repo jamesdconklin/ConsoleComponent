@@ -20,7 +20,8 @@ $term_offset: calc(100vw / 10);
 }
 
 body {
-  background-image: url('../images/Primary_source_unavailable_terminal_error.jpg');
+  // background-image: url('../images/Primary_source_unavailable_terminal_error.jpg');
+  background-image: url('./Primary_source_unavailable_terminal_error.jpg');
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -54,12 +55,12 @@ body {
   padding: calc(#{$term_offset} * 0.3) calc(#{$term_offset} * 0.15) ;
 
   word-wrap: break-word;
-  line-height: 1.3em;
+  line-height: 1.2em;
 
 
   * {
     word-wrap: break-word;
-    line-height: 1.3em;
+    line-height: 1.2em;
   }
 
   .console-cursor-empty {
