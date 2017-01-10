@@ -4,7 +4,7 @@ module.exports = {
   context: __dirname,
   entry: "./frontend/entry.jsx",
   output: {
-    path: path.join(__dirname, 'app', 'assets', 'javascripts'),
+    path: __dirname,
     filename: "bundle.js"
   },
   module: {
@@ -23,6 +23,11 @@ module.exports = {
   resolve: {
     root: __dirname,
     alias: {
+      "ConsoleWrapper": "frontend/components/console_wrapper.jsx",
+      "ConsoleComponent": "frontend/components/console_component.jsx",
+      "Entry": "frontend/entry.jsx",
+      "App": "frontend/components/app.jsx",
+      "Root": "frontend/components/root.jsx"
     },
     extensions: ["", ".js", ".jsx" ]
   }
