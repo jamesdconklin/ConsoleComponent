@@ -19,9 +19,9 @@ class ConsoleWrapper extends React.Component {
     this.setState({ prompt });
   }
 
-  pushHistory({ data, input, output }) {
+  pushHistory({ type, input, output }) {
     this.setState({
-      history: this.state.history.concat({ data, input, output })
+      history: this.state.history.concat({ type, input, output })
     });
   }
 

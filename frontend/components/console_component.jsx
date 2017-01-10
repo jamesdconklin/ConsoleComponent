@@ -12,32 +12,38 @@ class ConsoleComponent extends React.Component {
     this._evalPromiseConstructor = this._evalPromiseConstructor.bind(this);
     this._renderPrompt = this._renderPrompt.bind(this);
     this._renderHistory = this._renderHistory.bind(this);
-    this._handleKeyUp = this._handleKeyUp.bind(this);
+    this._handleKeyDown = this._handleKeyDown.bind(this);
   }
 
   // This is overkill for demo purposes, but it is entirely plausible that
   // evaluation take a long time. As such, it should be asynch.
   _evalPromiseConstructor(input) {
+    let { pushHistory, setPrompt, history } = this.props;
+    var handler = (result) => {
+      pushHistory(result);
+      setPrompt('');
+      this.setState({
+        cursorPos: 0,
+        historyPos: history.length + 1
+      });
+
+    };
     var evalPromise = new Promise((resolve, reject) => {
       let result;
       try {
         result = this.props.evalFn(input);
         resolve({ type: "stdout", input, output: result });
       } catch(err) {
-        reject({ type: "stderr", input, output: '${err.name}: ${err.message}'});
+        reject({ type: "stderr", input, output: `${err.name}: ${err.message}`});
       }
     });
-    return evalPromise.then(
-      this.props.pushHistory,
-      this.props.pushHistory
-    );
+    return evalPromise.then(handler, handler);
   }
 
-  _handleKeyUp(e) {
+  _handleKeyDown(e) {
     let { setPrompt, prompt, history } = this.props;
     let {cursorPos, historyPos } = this.state;
     let newHistoryPos = historyPos;
-    console.log(e.key);
     switch (e.key) {
       case "ArrowLeft":
         this.setState({
@@ -75,10 +81,35 @@ class ConsoleComponent extends React.Component {
           historyPos: newHistoryPos
         });
         break;
+      case "Shift":
+        break;
+      case "Alt":
+        break;
+      case "Meta":
+        break;
+      case "CapsLock":
+        break;
+      case "Control":
+        break;
+      case "Delete":
+        prompt = prompt.slice(0,cursorPos) + prompt.slice(cursorPos+1);
+        setPrompt(prompt);
+        break;
+      case "Backspace":
+        if (!prompt) {
+          break;
+        }
+        prompt = prompt.slice(0,cursorPos - 1) + prompt.slice(cursorPos);
+        setPrompt(prompt);
+        this.setState({ cursorPos: cursorPos - 1 });
+        break;
+      case "Enter":
+        this._evalPromiseConstructor(prompt);
+        break;
       default:
-        setPrompt("Foooooo");
-
-
+        prompt = prompt.slice(0,cursorPos) + e.key + prompt.slice(cursorPos);
+        setPrompt(prompt);
+        this.setState({ cursorPos: cursorPos + 1 });
     }
   }
 
@@ -88,24 +119,36 @@ class ConsoleComponent extends React.Component {
     if (prompt) {
       return (
         <span className="console-prompt">
+          {"> "}
           {prompt.slice(0, cursorPos)}
           <span className="console-cursor">{prompt[cursorPos] || " "}</span>
           {prompt.slice(cursorPos+1) || ''}
         </span>
       );
     }
-    return <span className="console-prompt console-prompt-empty"/>;
+    // I tried to get the cursor rendering with pseudocontent like I did
+    // above, but it shifted the prompt over.
+    return <span className="console-prompt">> <span className="console-cursor console-cursor-empty"/></span>;
   }
 
   _renderHistory() {
     let { history } = this.props;
+    let historyList = [];
+    history.forEach((lineItem, idx) => {
+      historyList.push(
+        <li key={`in-${idx}`} className={"history-input"}>
+          {lineItem.input}
+        </li>
+      );
+      historyList.push(
+        <li key={`out-${idx}`} className={lineItem.type}>
+          {lineItem.output.toString()}
+        </li>
+      );
+    });
     return (
       <ul className="console-history">
-        {history.map((lineItem, idx) => (
-          <li key={idx} className={lineItem.type}>
-            {lineItem.output}
-          </li>
-        ))}
+        {historyList}
       </ul>
     );
   }
@@ -116,7 +159,7 @@ class ConsoleComponent extends React.Component {
   render () {
     return (
       <div className="console-component"
-           onKeyUp={this._handleKeyUp}
+           onKeyDown={this._handleKeyDown}
            tabIndex="0" autoFocus>
         {this._renderHistory()}
         {this._renderPrompt()}
