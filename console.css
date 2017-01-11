@@ -1,3 +1,11 @@
+@-webkit-keyframes blinker {
+  50% {
+    background-color: transparent;
+    color: #4e4;
+    box-shadow: none;
+  }
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -9,7 +17,7 @@ body {
 }
 
 .console-component {
-  background: repeating-linear-gradient(0deg, transparent, transparent 9px, rgba(68, 238, 68, 0.03) 11px, rgba(68, 238, 68, 0.07) 12px, rgba(68, 238, 68, 0.03) 14px, transparent 23px);
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(68, 238, 68, 0.03) 4px, rgba(68, 238, 68, 0.07) 5px, rgba(68, 238, 68, 0.03) 6px, transparent 7px);
   position: absolute;
   border-radius: calc(calc(100vw / 10) * 0.85);
   left: calc(calc(100vw / 10) * 0.85);
@@ -24,24 +32,20 @@ body {
   box-sizing: border-box;
   padding: calc(calc(100vw / 10) * 0.3) calc(calc(100vw / 10) * 0.15);
   word-wrap: break-word;
-  line-height: 1.2em;
+  line-height: 1.3em;
 }
 
 .console-component * {
   word-wrap: break-word;
-  line-height: 1.2em;
+  line-height: 1.3em;
 }
 
-.console-component .console-cursor-empty {
-  border: none;
-  white-space: pre;
-  background-color: #4e4;
-}
-
-.console-component .console-cursor {
+.console-component .console-cursor, .console-component .console-cursor-empty {
+  animation: blinker 1.3s step-start 0s infinite;
+  white-space: pre-wrap;
   color: #222;
-  border: none;
   background-color: #4e4;
+  box-shadow: 0 0 4px rgba(68, 238, 68, 0.5);
 }
 
 .console-component .console-history .history-input {
@@ -64,6 +68,7 @@ body {
 
 .console-component .console-prompt {
   font-weight: 700;
+  white-space: pre-wrap;
 }
 
 .console-component .console-prompt:after {

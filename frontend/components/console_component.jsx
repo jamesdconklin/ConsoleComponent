@@ -15,8 +15,12 @@ class ConsoleComponent extends React.Component {
     this._handleKeyDown = this._handleKeyDown.bind(this);
   }
 
-  // This is overkill for demo purposes, but it is entirely plausible that
-  // evaluation take a long time. As such, it should be asynch.
+  componentDidMount() {
+     document.getElementById("console-terminal").focus();
+  }
+
+  // Promises are overkill for demo purposes, but it is entirely plausible
+  // that evaluation take a long time. As such, it should be asynch.
   _evalPromiseConstructor(input) {
     let { pushHistory, setPrompt, history } = this.props;
     var handler = (result) => {
@@ -27,6 +31,7 @@ class ConsoleComponent extends React.Component {
         historyPos: history.length + 1
       });
 
+      // Scroll down whenever we get a response.
       var term = document.getElementById("console-terminal");
       term.scrollTop = term.scrollHeight - term.clientHeight;
 
@@ -51,6 +56,8 @@ class ConsoleComponent extends React.Component {
     return evalPromise.then(handler, handler);
   }
 
+  // all the preventDefaults are largely to prevent
+  // arrow keys and space scrolling the screen around.
   _handleKeyDown(e) {
     let { setPrompt, prompt, history } = this.props;
     let {cursorPos, historyPos } = this.state;
@@ -129,12 +136,11 @@ class ConsoleComponent extends React.Component {
         break;
 
       default:
-        console.log(e.key);
         if (e.key === " ") {
           e.preventDefault();
         }
         if (e.ctrlKey) {
-          if ('qQwWrRtT'.indexOf(e.key) < 0) {
+          if ('qQwWrRtT0'.indexOf(e.key) < 0) {
             e.preventDefault();
           }
           //TODO: Handle other control sequences.
@@ -188,7 +194,6 @@ class ConsoleComponent extends React.Component {
   }
 
   // TIL: tabIndex="0" makes an element focusable.
-  // TODO: Make it a form instead.
   render () {
     return (
       <div className="console-component" id="console-terminal"

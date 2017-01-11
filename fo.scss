@@ -1,4 +1,4 @@
-// compileExpanded: ./fo.css
+// compileExpanded: ./console.css
 $term_black: #222;
 $term_white: #eee;
 $term_green: #4e4;
@@ -7,13 +7,11 @@ $term_orange: #e94;
 $term_yellow: #ee4;
 $term_grey: #777;
 
-$term_bg: $term_black;
-$term_text: $term_white;
-
 $term_offset: calc(100vw / 10);
 
-// font-family: 'Ubuntu Mono', monospace;
-// font-family: 'VT323', monospace;
+@-webkit-keyframes blinker {
+  50% { background-color: transparent; color: $term-green; box-shadow: none; }
+}
 
 ::-webkit-scrollbar {
   display: none;
@@ -31,11 +29,11 @@ body {
   background: repeating-linear-gradient(
     0deg,
     transparent,
-    transparent 9px,
-    transparentize($term_green, .97) 11px,
-    transparentize($term_green, .93) 12px,
-    transparentize($term_green, .97) 14px,
-    transparent 23px
+    transparent 3px,
+    transparentize($term_green, .97) 4px,
+    transparentize($term_green, .93) 5px,
+    transparentize($term_green, .97) 6px,
+    transparent 7px
   );
 
   position: absolute;
@@ -55,24 +53,20 @@ body {
   padding: calc(#{$term_offset} * 0.3) calc(#{$term_offset} * 0.15) ;
 
   word-wrap: break-word;
-  line-height: 1.2em;
+  line-height: 1.3em;
 
 
   * {
     word-wrap: break-word;
-    line-height: 1.2em;
+    line-height: 1.3em;
   }
 
-  .console-cursor-empty {
-    border: none;
-    white-space: pre;
-    background-color: $term_green;
-  }
-
-  .console-cursor {
+  .console-cursor, .console-cursor-empty {
+    animation: blinker 1.3s step-start 0s infinite;
+    white-space: pre-wrap;
     color: $term_black;
-    border: none;
     background-color: $term_green;
+    box-shadow: 0 0 4px transparentize($term_green, 0.5);
   }
 
   .console-history {
@@ -95,11 +89,11 @@ body {
         content: "=> "
       }
     }
-
   }
 
   .console-prompt {
     font-weight: 700;
+    white-space: pre-wrap;
 
     &:after {
       content: '.';

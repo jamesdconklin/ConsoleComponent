@@ -1,0 +1,85 @@
+// compileExpanded: ./console.css
+$term-black: #222;
+$term-white: #eee;
+$term-green: #4e4;
+$term-red: #e44;
+$term-orange: #e94;
+$term-yellow: #ee4;
+$term-grey: #777;
+
+$term-bg: $term-black;
+$term-text: $term-white;
+
+.console-component {
+  color: $term-white;
+  background-color: $term-black;
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 14px;
+
+  height: 600px;
+  width: 800px;
+  overflow-y: scroll;
+  padding: 5px;
+
+  // I can't figure out how to get terminal-style word breaks working.
+  // As is, it breaks on natural word boundaries before element boundaries.
+
+  word-wrap: break-word;
+  line-height: 1.3em;
+  * {
+    line-height: 1.3em;
+    word-wrap: break-word;
+  }
+
+  .console-cursor-empty {
+    white-space: pre-wrap;
+    background-color: $term-grey;
+  }
+
+  .console-cursor {
+    white-space: pre-wrap;
+    background-color: $term-grey;
+
+  }
+
+  .console-history {
+    .history-input {
+      color: $term-orange;
+      font-weight: 700;
+
+      &:before {
+        content: ".";
+        visibility: hidden;
+      }
+    }
+
+    .stderr {
+      color: $term-red;
+    }
+
+    .stdout {
+      color: $term-green;
+
+      &:before {
+        content: "=> "
+      }
+    }
+
+  }
+
+  .console-prompt {
+    color: $term_yellow;
+    font-weight: 700;
+    white-space: pre-wrap;
+
+    &:after {
+      content: '.';
+      visibility: hidden;
+    }
+
+    &:before {
+      content: ".";
+      visibility: hidden;
+    }
+  }
+}

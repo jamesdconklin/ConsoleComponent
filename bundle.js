@@ -21539,10 +21539,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _promise = __webpack_require__(180);
-	
-	var _promise2 = _interopRequireDefault(_promise);
-	
 	var _ConsoleComponent = __webpack_require__(190);
 	
 	var _ConsoleComponent2 = _interopRequireDefault(_ConsoleComponent);
@@ -22559,11 +22555,16 @@
 	    return _this;
 	  }
 	
-	  // This is overkill for demo purposes, but it is entirely plausible that
-	  // evaluation take a long time. As such, it should be asynch.
-	
-	
 	  _createClass(ConsoleComponent, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      document.getElementById("console-terminal").focus();
+	    }
+	
+	    // Promises are overkill for demo purposes, but it is entirely plausible
+	    // that evaluation take a long time. As such, it should be asynch.
+	
+	  }, {
 	    key: '_evalPromiseConstructor',
 	    value: function _evalPromiseConstructor(input) {
 	      var _this2 = this;
@@ -22581,6 +22582,7 @@
 	          historyPos: history.length + 1
 	        });
 	
+	        // Scroll down whenever we get a response.
 	        var term = document.getElementById("console-terminal");
 	        term.scrollTop = term.scrollHeight - term.clientHeight;
 	      };
@@ -22603,6 +22605,10 @@
 	      });
 	      return evalPromise.then(handler, handler);
 	    }
+	
+	    // all the preventDefaults are largely to prevent
+	    // arrow keys and space scrolling the screen around.
+	
 	  }, {
 	    key: '_handleKeyDown',
 	    value: function _handleKeyDown(e) {
@@ -22689,12 +22695,11 @@
 	          break;
 	
 	        default:
-	          console.log(e.key);
 	          if (e.key === " ") {
 	            e.preventDefault();
 	          }
 	          if (e.ctrlKey) {
-	            if ('qQwWrRtT'.indexOf(e.key) < 0) {
+	            if ('qQwWrRtT0'.indexOf(e.key) < 0) {
 	              e.preventDefault();
 	            }
 	            //TODO: Handle other control sequences.
@@ -22769,7 +22774,6 @@
 	    }
 	
 	    // TIL: tabIndex="0" makes an element focusable.
-	    // TODO: Make it a form instead.
 	
 	  }, {
 	    key: 'render',

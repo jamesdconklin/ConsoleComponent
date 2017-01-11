@@ -1,5 +1,4 @@
 import React from 'react';
-import Promise from 'promise';
 import ConsoleComponent from 'ConsoleComponent';
 
 class ConsoleWrapper extends React.Component {
