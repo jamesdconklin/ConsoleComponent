@@ -32,12 +32,12 @@ body {
   box-sizing: border-box;
   padding: calc(calc(100vw / 10) * 0.3) calc(calc(100vw / 10) * 0.15);
   word-wrap: break-word;
-  line-height: 1.3em;
+  line-height: 1.5em;
 }
 
 .console-component * {
   word-wrap: break-word;
-  line-height: 1.3em;
+  line-height: 1.5em;
 }
 
 .console-component .console-cursor, .console-component .console-cursor-empty {
