@@ -53,12 +53,12 @@ body {
   padding: calc(#{$term_offset} * 0.3) calc(#{$term_offset} * 0.15) ;
 
   word-wrap: break-word;
-  line-height: 1.5em;
+  line-height: 1.3em;
 
 
   * {
     word-wrap: break-word;
-    line-height: 1.5em;
+    line-height: 1.3em;
   }
 
   .console-cursor, .console-cursor-empty {

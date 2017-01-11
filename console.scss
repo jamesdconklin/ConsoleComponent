@@ -25,9 +25,9 @@ $term-text: $term-white;
   // As is, it breaks on natural word boundaries before element boundaries.
 
   word-wrap: break-word;
-  line-height: 1.5em;
+  line-height: 1.3em;
   * {
-    line-height: 1.5em;
+    line-height: 1.3em;
     word-wrap: break-word;
   }
 
