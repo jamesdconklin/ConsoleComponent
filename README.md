@@ -34,3 +34,7 @@ class ConsoleWrapper extends React.Component {
     );
   }
 ```
+
+## TODOs
+
+ - Currently the guissied up demo style sheet has only been tested on Chrome. As it uses `calc()`, it will need rejiggering to work on non-webkit browsers. 
